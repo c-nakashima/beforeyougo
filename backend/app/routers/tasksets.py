@@ -6,6 +6,7 @@ from psycopg2 import Error
 
 from app.db import get_connection
 
+# Create a taskset
 class TasksetCreate(BaseModel):
   title: str = Field(
     min_length=1,
@@ -16,6 +17,7 @@ class TasksetCreate(BaseModel):
     max_length=250,
   )
 
+# Create a task
 class TaskCreate(BaseModel):
   title: str = Field(
     min_length=1,
@@ -25,6 +27,11 @@ class TaskCreate(BaseModel):
     default=None,
     ge=0,
   )
+
+
+# Update task run item
+class TaskRunItemUpdate(BaseModel):
+  checked: bool
 
 router = APIRouter(
   prefix="/tasksets",
@@ -343,3 +350,58 @@ def create_taskset_run(
             status_code=500,
             detail="Failed to create taskset run",
         ) from error
+        
+
+# Update a task run item
+@router.patch("task-run-items/{item_id}")
+def update_task_run_item(
+  item_id: UUID,
+  item_update: TaskRunItemUpdate,
+):
+    update_task_query = """
+        UPDATE task_run_items
+        SET
+            checked = %s,
+            checked_at = CASE
+                WHEN %s = true THEN NOW()
+                ELSE NULL
+            END
+        WHERE id = %s
+        RETURNING
+            id,
+            taskset_run_id,
+            task_id,
+            title_snapshot,
+            checked,
+            checked_at;
+    """
+
+    try:
+      with get_connection() as connection:
+        with connection.cursor() as cursor:
+          cursor.execute(
+            update_task_query,
+            (
+              item_update.checked,
+              item_update.checked,
+              str(item_id),
+            ),
+          )
+          updated_item = cursor.fetchone()
+
+          if updated_item is None:
+            raise HTTPException(
+              status_code=status.HTTP_404_NOT_FOUND,
+              detail ="Task run item not found"
+            )
+          
+      return updated_item
+
+    except HTTPException:
+      raise
+
+    except Error as error:
+      raise HTTPException(
+        status_code=500,
+        detail="Failed to update task run item",
+      ) from error
