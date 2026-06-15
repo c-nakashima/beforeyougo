@@ -405,3 +405,48 @@ def update_task_run_item(
         status_code=500,
         detail="Failed to update task run item",
       ) from error
+
+
+# Complete a running taskset
+@router.post("/taskset-runs/{run_id}/complete")
+def complete_taskset_run(run_id: UUID):
+  complete_query = """
+      UPDATE taskset_runs
+      SET
+          status = 'done',
+          completed_at = NOW()
+      WHERE id = %s,
+      RETURNING
+          id,
+          taskset_id,
+          status,
+          started_at,
+          completed_at;
+  """
+
+  try:
+    with get_connection() as connection:
+      with connection.cursor() as cursor:
+        cursor.execute(
+          complete_query,
+          (str(run_id),)
+        )
+        completed_run = cursor.fetchone()
+
+        if completed_run is None:
+          raise HTTPException(
+            status_code = status.HTTP_404_NOT_FOUND,
+            detail="Taskset run not found"
+          )
+
+    return completed_run
+
+  except HTTPException:
+    raise
+
+  except Error as error:
+    raise HTTPException(
+      status_code=500,
+      detail="Failed to complete taskset run",
+    ) from error
+    
