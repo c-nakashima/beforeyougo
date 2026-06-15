@@ -39,6 +39,47 @@ router = APIRouter(
 )
 
 
+# Get taskset runnning history
+@router.get("/history")
+def get_history():
+    query = """
+        SELECT
+            taskset_runs.id,
+            taskset_runs.taskset_id,
+            tasksets.title AS taskset_title,
+            taskset_runs.status,
+            taskset_runs.started_at,
+            taskset_runs.completed_at,
+            COUNT(task_run_items.id)::int AS total_items,
+            COUNT(*) FILTER (
+                WHERE task_run_items.checked = true
+            )::int AS checked_items
+        FROM taskset_runs
+        JOIN tasksets
+            ON tasksets.id = taskset_runs.taskset_id
+        LEFT JOIN task_run_items
+            ON task_run_items.taskset_run_id = taskset_runs.id
+        GROUP BY
+            taskset_runs.id,
+            tasksets.title
+        ORDER BY taskset_runs.started_at DESC;
+    """
+
+    try:
+        with get_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                histories = cursor.fetchall()
+
+        return histories
+
+    except Error as error:
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to retrieve history",
+        ) from error
+
+
 # Get taskset list
 @router.get("")
 def get_tasksets():
@@ -449,4 +490,3 @@ def complete_taskset_run(run_id: UUID):
       status_code=500,
       detail="Failed to complete taskset run",
     ) from error
-    
