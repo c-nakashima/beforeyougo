@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel, Field
 from psycopg2 import Error
@@ -48,6 +50,71 @@ def get_tasksets():
           status_code=500,
           detail="Failed to fetch tasksets",
       ) from error
+
+
+@router.get("/{taskset_id}")
+def get_tasksets(taskset_id: UUID):
+  taskset_query = """
+    SELECT
+      id,
+      title,
+      description,
+      created_at,
+      updated_at
+    FROM tasksets
+    WHERE id = %s;
+  """
+  tasks_query = """
+    SELECT
+      id,
+      title,
+      sort_order,
+      created_at,
+      updated_at
+    FROM tasks
+    WHERE taskset_id = %s
+    ORDER BY sort_order ASC;
+  """
+
+  try:
+    # connect to the PostgreSQL database
+    with get_connection() as connection:
+      # create a cursor object using the connection
+      with connection.cursor() as cursor:
+        cursor.execute(
+          taskset_query,
+          (str(taskset_id,),)
+        )
+        taskset = cursor.fetchone()
+
+        if taskset is None:
+          raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Taskset not found",
+          )
+
+        cursor.execute(
+          tasks_query,
+          (str(taskset_id,),)
+        )
+        tasks = cursor.fetchall()
+
+    return {
+      **taskset,
+      "tasks": tasks,
+    }
+
+  except HTTPException:
+    raise
+
+  except Error as error:
+      raise HTTPException(
+          status_code=500,
+          detail="Failed to retrieve taskset",
+      ) from error
+
+
+
 
 
 @router.post("", status_code=status.HTTP_201_CREATED)
