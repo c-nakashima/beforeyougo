@@ -32,6 +32,7 @@ router = APIRouter(
 )
 
 
+# Get taskset list
 @router.get("")
 def get_tasksets():
   query = """
@@ -63,6 +64,7 @@ def get_tasksets():
       ) from error
 
 
+# Get a taskset
 @router.get("/{taskset_id}")
 def get_taskset(taskset_id: UUID):
   taskset_query = """
@@ -126,6 +128,7 @@ def get_taskset(taskset_id: UUID):
       ) from error
 
 
+# Create a taskset
 @router.post("", status_code=status.HTTP_201_CREATED)
 def create_taskset(taskset: TasksetCreate):
   query = """
@@ -158,6 +161,7 @@ def create_taskset(taskset: TasksetCreate):
     ) from error
 
 
+# Create a task
 @router.post("/{taskset_id}/tasks", status_code=status.HTTP_201_CREATED)
 def create_task(
   taskset_id: UUID,
@@ -220,3 +224,122 @@ def create_task(
       status_code=500,
       detail="Failed to create task",
     ) from error
+
+
+# Run a taskset
+@router.post("/{taskset_id}/runs", status_code=status.HTTP_201_CREATED)
+def create_taskset_run(
+    taskset_id: UUID,
+):
+    get_taskset_query = """
+        SELECT id, title
+        FROM tasksets
+        WHERE id = %s;
+    """
+
+    get_tasks_query = """
+        SELECT
+            id,
+            title,
+            sort_order
+        FROM tasks
+        WHERE taskset_id = %s
+        ORDER BY sort_order ASC;
+    """
+
+    create_run_query = """
+        INSERT INTO taskset_runs (
+            taskset_id,
+            status
+        )
+        VALUES (%s, 'wip')
+        RETURNING
+            id,
+            taskset_id,
+            status,
+            started_at,
+            completed_at;
+    """
+
+    create_run_item_query = """
+        INSERT INTO task_run_items (
+            taskset_run_id,
+            task_id,
+            title_snapshot,
+            checked
+        )
+        VALUES (%s, %s, %s, false)
+        RETURNING
+            id,
+            taskset_run_id,
+            task_id,
+            title_snapshot,
+            checked,
+            checked_at;
+    """
+
+    try:
+        with get_connection() as connection:
+            with connection.cursor() as cursor:
+                # get a taskset to execute
+                cursor.execute(
+                    get_taskset_query,
+                    (str(taskset_id),),
+                )
+                taskset = cursor.fetchone()
+
+                if taskset is None:
+                    raise HTTPException(
+                        status_code=status.HTTP_404_NOT_FOUND,
+                        detail="Taskset not found",
+                    )
+
+                # get tasks belong to the taskset to execute
+                cursor.execute(
+                    get_tasks_query,
+                    (str(taskset_id),),
+                )
+                tasks = cursor.fetchall()
+
+                if len(tasks) == 0:
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail="Cannot start a run without tasks",
+                    )
+
+                # create a run
+                cursor.execute(
+                    create_run_query,
+                    (str(taskset_id),),
+                )
+                created_run = cursor.fetchone()
+
+                run_items = []
+
+                # add tasks as task run item
+                for task in tasks:
+                    cursor.execute(
+                        create_run_item_query,
+                        (
+                            created_run["id"],
+                            task["id"],
+                            task["title"],
+                        ),
+                    )
+                    run_item = cursor.fetchone()
+                    run_items.append(run_item)
+
+        return {
+            **created_run,
+            "taskset_title": taskset["title"],
+            "items": run_items,
+        }
+
+    except HTTPException:
+        raise
+
+    except Error as error:
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to create taskset run",
+        ) from error
