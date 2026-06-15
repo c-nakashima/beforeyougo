@@ -32,8 +32,8 @@ def get_tasksets():
         rows = cursor.fetchall()
         # return the rows
         return rows
-  except Error as e:
-        raise HTTPException(
-            status_code=500,
-            detail="Failed to retrieve tasksets",
-        ) from error
+  except Error as error:
+      raise HTTPException(
+          status_code=500,
+          detail="Failed to fetch tasksets",
+      ) from error
