@@ -1,4 +1,5 @@
-import { Taskset } from '../../domain/type'
+import Link from 'next/link'
+import type { Taskset } from '@/features/tasksets/domain/type'
 
 /**
  * Taskset List Component
@@ -18,7 +19,9 @@ export function TasksetList({ tasksets }: Props) {
     <ul>
       {tasksets.map((taskset) => (
         <li key={taskset.id}>
-          <h2>{taskset.title}</h2>
+          <Link href={`/tasksets/${taskset.id}`}>
+            <h2>{taskset.title}</h2>
+          </Link>
           {taskset.description && <p>{taskset.description}</p>}
           <p>{taskset.task_count} tasks</p>
         </li>
