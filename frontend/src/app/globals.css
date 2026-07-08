@@ -1,22 +1,71 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@source "../**/*.{js,ts,jsx,tsx,mdx}";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* =========================
+     Primitive colors
+     ========================= */
+  --turkish-rose-50: #f9f6f7;
+  --turkish-rose-100: #f4eff1;
+  --turkish-rose-200: #ebdfe4;
+  --turkish-rose-300: #dcc5cf;
+  --turkish-rose-400: #c5a1b0;
+  --turkish-rose-500: #b18395;
+  --turkish-rose-600: #9d6d7d;
+  --turkish-rose-700: #825462;
+  --turkish-rose-800: #6c4853;
+  --turkish-rose-900: #5c3f47;
+  --turkish-rose-950: #362127;
+
+  --white: #ffffff;
+  --neutral-900: #171717;
+  --slate-500: #64748b;
+
+  /* =========================
+     Semantic colors
+     ========================= */
+  --background: var(--turkish-rose-50);
+  --foreground: var(--neutral-900);
+
+  --surface: var(--white);
+  --surface-muted: var(--turkish-rose-100);
+
+  --muted: var(--slate-500);
+  --border: var(--turkish-rose-200);
+
+  --primary: var(--turkish-rose-700);
+  --primary-hover: var(--turkish-rose-800);
+  --primary-foreground: var(--white);
 }
 
 @theme inline {
+  /* Primitive color utilities */
+  --color-turkish-rose-50: var(--turkish-rose-50);
+  --color-turkish-rose-100: var(--turkish-rose-100);
+  --color-turkish-rose-200: var(--turkish-rose-200);
+  --color-turkish-rose-300: var(--turkish-rose-300);
+  --color-turkish-rose-400: var(--turkish-rose-400);
+  --color-turkish-rose-500: var(--turkish-rose-500);
+  --color-turkish-rose-600: var(--turkish-rose-600);
+  --color-turkish-rose-700: var(--turkish-rose-700);
+  --color-turkish-rose-800: var(--turkish-rose-800);
+  --color-turkish-rose-900: var(--turkish-rose-900);
+  --color-turkish-rose-950: var(--turkish-rose-950);
+
+  /* Semantic color utilities */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+
+  /* Fonts */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
