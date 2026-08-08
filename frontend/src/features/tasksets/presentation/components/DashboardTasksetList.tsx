@@ -2,21 +2,17 @@ import type { Taskset } from '@/features/tasksets/domain/type'
 import { BaseTasksetCard } from '@/features/tasksets/presentation/components/'
 
 /**
- * Tasksets page Taskset List Component
+ * Dashboard Taskset List Component
  *
- * @property {string} tasksets - taskset list
+ * @property {Taslset[]} tasksets - taskset
  */
 type Props = {
   tasksets: Taskset[]
 }
 
-export function TasksetList({ tasksets }: Props) {
-  if (tasksets.length === 0) {
-    return <p>No tasksets yet.</p>
-  }
-
+export function DashboardTasksetList({ tasksets }: Props) {
   return (
-    <ul className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-2">
+    <ul className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
       {tasksets.map((taskset) => (
         <li key={taskset.id}>
           <BaseTasksetCard taskset={taskset} className="p-2" />
