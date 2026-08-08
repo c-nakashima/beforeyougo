@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import { mdiPlay, mdiPlus } from '@mdi/js'
 
-import { Header, Button } from '@/app/shared/components/layout'
+import { Header } from '@/app/shared/components/layout'
+import { Button } from '@/app/shared/components/ui'
 
 import { DashboardTasksetList } from '@/features/tasksets/presentation/components/'
 import { getTasksets } from '@/features/tasksets/application/getTasksets'
