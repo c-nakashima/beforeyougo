@@ -20,19 +20,24 @@
   --white: #ffffff;
   --neutral-900: #171717;
   --slate-500: #64748b;
+  --slate-600: #4a5565;
 
   /* =========================
-     Semantic colors
+    Semantic colors
      ========================= */
   --background: var(--turkish-rose-50);
   --foreground: var(--neutral-900);
 
   --surface: var(--white);
-  --surface-muted: var(--turkish-rose-100);
+  --surface-muted: var(--turkish-rose-200);
+
+  /* Text */
+  --text-secondary: var(--slate-600);
 
   --muted: var(--slate-500);
   --border: var(--turkish-rose-200);
 
+  /* Brand */
   --primary: var(--turkish-rose-700);
   --primary-hover: var(--turkish-rose-800);
   --primary-foreground: var(--white);
@@ -66,6 +71,10 @@
   /* Fonts */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+@utility text-secondary {
+  color: var(--text-secondary);
 }
 
 body {

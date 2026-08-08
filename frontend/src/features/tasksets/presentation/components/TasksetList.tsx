@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import type { Taskset } from '@/features/tasksets/domain/type'
+import { TasksetItem } from '@/features/tasksets/presentation/components/'
 
 /**
  * Taskset List Component
@@ -16,14 +16,10 @@ export function TasksetList({ tasksets }: Props) {
   }
 
   return (
-    <ul>
+    <ul className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
       {tasksets.map((taskset) => (
         <li key={taskset.id}>
-          <Link href={`/tasksets/${taskset.id}`}>
-            <h2>{taskset.title}</h2>
-          </Link>
-          {taskset.description && <p>{taskset.description}</p>}
-          <p>{taskset.task_count} tasks</p>
+          <TasksetItem taskset={taskset} />
         </li>
       ))}
     </ul>
