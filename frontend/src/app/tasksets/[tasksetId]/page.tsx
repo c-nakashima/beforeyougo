@@ -1,6 +1,11 @@
 import { getTasksetDetail } from '@/features/tasksets/application/getTasksetDetail'
-import { TasksetDetail } from '@/features/tasksets/presentation/components/TasksetDetail'
+import { TasksetDetailBox } from '@/features/tasksets/presentation/components'
 
+/**
+ * Taskset Detail Page
+ * Display a taskset's list and let user to view/run/add tasks
+ *  @property {string} tasksetId - taskset id
+ */
 type Props = {
   params: {
     tasksetId: string
@@ -13,8 +18,7 @@ export default async function TasksetsPage({ params }: Props) {
 
   return (
     <main>
-      <h1>Your Tasksets</h1>
-      <TasksetDetail tasksetDetail={tasksetDetail} />
+      <TasksetDetailBox tasksetDetail={tasksetDetail} />
     </main>
   )
 }

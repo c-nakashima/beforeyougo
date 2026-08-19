@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import type { Taskset } from '@/features/tasksets/domain/type'
-import { mdiPlus } from '@mdi/js'
 import { Header } from '@/app/shared/components/layout'
 import { SearchInput } from '@/app/shared/components/ui'
 import {
