@@ -24,3 +24,9 @@ export type TasksetDetail = {
   updated_at: string
   tasks: Task[]
 }
+
+// Input to create a taskset
+export type CreateTasksetInput = {
+  title: string
+  description?: string
+}

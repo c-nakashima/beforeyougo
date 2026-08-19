@@ -1,13 +1,14 @@
 'use client'
 
-import type { Taskset } from '@/features/tasksets/domain/type'
-
-import { mdiPlus } from '@mdi/js'
-
-import { Header } from '@/app/shared/components/layout'
-import { SearchInput, Button } from '@/app/shared/components/ui'
-import { TasksetList } from '@/features/tasksets/presentation/components/'
 import { useState } from 'react'
+import type { Taskset } from '@/features/tasksets/domain/type'
+import { mdiPlus } from '@mdi/js'
+import { Header } from '@/app/shared/components/layout'
+import { SearchInput } from '@/app/shared/components/ui'
+import {
+  TasksetList,
+  AddTasksetButton,
+} from '@/features/tasksets/presentation/components/'
 
 /**
  * Taskset Box Component
@@ -40,11 +41,7 @@ export function TasksetBox({ tasksets }: Props) {
         <div className="mb-6 flex items-center justify-between mb-3">
           <h1 className="text-xl font-bold ml-1">All Tasksets</h1>
           <div className="flex shrink-0 items-center gap-2">
-            <Button
-              IconPath={mdiPlus}
-              Text="Add"
-              className="inline-flex items-center gap-1.5 rounded-md bg-surface-muted px-4 py-2 text-sm font-medium text-primary"
-            />
+            <AddTasksetButton />
           </div>
         </div>
         <SearchInput

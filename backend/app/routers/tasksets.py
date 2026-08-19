@@ -189,7 +189,7 @@ def create_taskset(taskset: TasksetCreate):
       id,
       title,
       description,
-      created_at
+      created_at,
       updated_at;
   """
 

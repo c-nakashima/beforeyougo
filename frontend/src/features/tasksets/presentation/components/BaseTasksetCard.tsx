@@ -15,7 +15,8 @@ export function BaseTasksetCard({ taskset, className }: Props) {
   return (
     <Link
       href={`/tasksets/${taskset.id}`}
-      className={`block rounded-xl border border-border bg-surface transition-colors hover:bg-surface-muted p-4 ${className}`}
+      style={{ cursor: 'pointer' }}
+      className={`block cursor-pointer rounded-xl border border-border bg-surface p-4 transition-colors hover:bg-surface-muted ${className ?? ''}`}
     >
       <h2 className="font-bold">{taskset.title}</h2>
       {taskset.description && (
