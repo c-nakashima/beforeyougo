@@ -20,7 +20,10 @@ app.add_middleware(
   allow_headers=["*"],
 )
 
-app.include_router(tasksets.router)
+app.include_router(
+  tasksets.router,
+  prefix="/api/backend",
+)
 
 @app.get("/")
 def root():
