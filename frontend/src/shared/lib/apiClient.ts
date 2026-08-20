@@ -1,4 +1,9 @@
-const API_BASE_URL = process.env.BACKEND_INTERNAL_URL ?? 'http://127.0.0.1:8000'
+// Use Vercel's backend service URL in production,
+// and fall back to the local FastAPI URL during development.
+// Remove the trailing slash to avoid paths like "//tasksets".
+const API_BASE_URL = (
+  process.env.BACKEND_INTERNAL_URL ?? 'http://127.0.0.1:8000'
+).replace(/\/$/, '')
 
 export async function apiClient<T>(
   path: string,
