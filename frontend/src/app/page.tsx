@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { mdiPlus } from '@mdi/js'
 
+export const dynamic = 'force-dynamic'
+
 import { Header } from '@/app/shared/components/layout'
 import { Button } from '@/app/shared/components/ui'
 
