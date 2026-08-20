@@ -1,11 +1,17 @@
-// Use Vercel's backend service URL in production,
-// and fall back to the local FastAPI URL during development.
-// FastAPI routes are mounted under "/api/backend".
-const BACKEND_URL = (
+// Server-side requests use Vercel's internal service URL in production
+// and local FastAPI during development.
+// Browser requests use the same-origin Vercel rewrite in production
+// and local FastAPI during development.
+const INTERNAL_BACKEND_URL = (
   process.env.BACKEND_INTERNAL_URL ?? 'http://127.0.0.1:8000'
 ).replace(/\/$/, '')
 
-const API_BASE_URL = `${BACKEND_URL}/api/backend`
+const API_BASE_URL =
+  typeof window === 'undefined'
+    ? `${INTERNAL_BACKEND_URL}/api/backend`
+    : process.env.NODE_ENV === 'production'
+      ? '/api/backend'
+      : 'http://127.0.0.1:8000/api/backend'
 
 export async function apiClient<T>(
   path: string,
