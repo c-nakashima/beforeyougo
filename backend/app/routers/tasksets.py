@@ -190,7 +190,8 @@ def create_taskset(taskset: TasksetCreate):
       title,
       description,
       created_at,
-      updated_at;
+      updated_at,
+      0 AS task_count;
   """
 
   try:

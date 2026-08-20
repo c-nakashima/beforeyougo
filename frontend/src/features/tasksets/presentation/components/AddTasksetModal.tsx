@@ -4,14 +4,16 @@ import { type MouseEvent, type SyntheticEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { createTaskset } from '@/features/tasksets/application/createTaskset'
+import type { Taskset } from '@/features/tasksets/domain/type'
 
 import { Button } from '@/app/shared/components/ui'
 
 type Props = {
   onClose: () => void
+  onCreated: (taskset: Taskset) => void
 }
 
-export function AddTasksetModal({ onClose }: Props) {
+export function AddTasksetModal({ onClose, onCreated }: Props) {
   // Stores the taskset title entered by the user
   const [title, setTitle] = useState('')
 
@@ -47,11 +49,12 @@ export function AddTasksetModal({ onClose }: Props) {
       setIsSubmitting(true)
       setError('')
 
-      await createTaskset({
+      const createdTaskset = await createTaskset({
         title: trimmedTitle,
         description: trimmedDescription || undefined,
       })
 
+      onCreated(createdTaskset)
       onClose()
       router.refresh()
     } catch {

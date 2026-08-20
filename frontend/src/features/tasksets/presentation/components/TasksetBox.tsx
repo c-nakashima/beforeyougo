@@ -23,8 +23,11 @@ export function TasksetBox({ tasksets }: Props) {
   // Search input state (stores the text entered by the user)
   const [search, setSearch] = useState('')
 
+  // Keeps the list in sync immediately after a taskset is created
+  const [displayedTasksets, setDisplayedTasksets] = useState(tasksets)
+
   // Filter tasksets by title or description using the search keyword
-  const filteredTasksets = tasksets.filter((taskset) => {
+  const filteredTasksets = displayedTasksets.filter((taskset) => {
     const keyword = search.trim().toLowerCase()
 
     return (
@@ -40,7 +43,14 @@ export function TasksetBox({ tasksets }: Props) {
         <div className="mb-6 flex items-center justify-between mb-3">
           <h1 className="text-xl font-bold ml-1">All Tasksets</h1>
           <div className="flex shrink-0 items-center gap-2">
-            <AddTasksetButton />
+            <AddTasksetButton
+              onCreated={(createdTaskset) =>
+                setDisplayedTasksets((currentTasksets) => [
+                  createdTaskset,
+                  ...currentTasksets,
+                ])
+              }
+            />
           </div>
         </div>
         <SearchInput
