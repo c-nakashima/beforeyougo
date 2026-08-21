@@ -4,8 +4,6 @@ Before You Go is a web application for managing the items and tasks you need bef
 
 Create tasksets such as "Before Work" or "Before a Trip" and group the relevant tasks in each one. The application is designed to reduce the effort of planning the same routine repeatedly and help prevent forgotten items.
 
-🔗 DEMO: [https://beforeyougo-ffqd.vercel.app/](https://beforeyougo-ffqd.vercel.app/)
-
 <img width="402" height="572" alt="Task List - Added" src="https://github.com/user-attachments/assets/7ad828a0-edfc-4b7a-8786-aa3c06a034b0" />
 
 ## Features
