@@ -31,20 +31,43 @@ export function TaskList({ tasksetId, initialTasks }: Props) {
     const trimmedTitle = title.trim()
     if (!trimmedTitle || isSubmitting) return
 
+    const previousTasks = tasks
+    const optimisticId = `temp-${Date.now()}`
+    const optimisticTask: Task = {
+      id: optimisticId,
+      title: trimmedTitle,
+      sort_order: tasks.length,
+      created_at: '',
+      updated_at: '',
+    }
+
+    // Optimistic UI: add with a temp id first, then swap in the server task on success
+    setTasks((currentTasks) => [...currentTasks, optimisticTask])
+    setTitle('')
+
     try {
       setIsSubmitting(true)
       setError('')
 
-      // new task
       const newTask = await createTask(tasksetId, {
         title: trimmedTitle,
-        sort_order: tasks.length,
+        sort_order: previousTasks.length,
       })
-      setTasks((currentTasks) => [...currentTasks, newTask])
 
-      // reset title
-      setTitle('')
+      // Replace the temp task in place so the list does not duplicate entries
+      setTasks((currentTasks) =>
+        currentTasks.map((task) => (task.id === optimisticId ? newTask : task)),
+      )
+      // Only show the success message when the API succeeds
+      setSuccessMessage('Task created successfully.')
+
+      setTimeout(() => {
+        setSuccessMessage('')
+      }, 3000)
     } catch {
+      // Roll back to the list before the optimistic add
+      setTasks(previousTasks)
+      setTitle(trimmedTitle)
       setError('Failed to add task. Please try again.')
     } finally {
       setIsSubmitting(false)
@@ -58,7 +81,7 @@ export function TaskList({ tasksetId, initialTasks }: Props) {
     // task list before deletion
     const previousTasks = tasks
 
-    // Optimistic UI : delete from the screen immediately
+    // Optimistic UI : delete from the screen immediately before API call resolved
     setTasks((currentTasks) =>
       currentTasks.filter((task) => task.id !== taskId),
     )
