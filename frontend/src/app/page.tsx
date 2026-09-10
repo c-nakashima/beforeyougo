@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'
 import { Header } from '@/app/shared/components/layout'
 import { Button } from '@/app/shared/components/ui'
 
-import { DashboardTasksetList } from '@/features/tasksets/presentation/components/'
+import { TasksetPreviewList } from '@/features/tasksets/presentation/components/'
 import { getTasksets } from '@/features/tasksets/application/getTasksets'
 
 export default async function HomePage() {
@@ -14,6 +14,7 @@ export default async function HomePage() {
   return (
     <main className="min-h-screen">
       <Header />
+
       <div className="mx-auto max-w-md md:max-w-2xl lg:max-w-4xl p-5">
         <div className="mb-6 flex items-center justify-between mb-3">
           <h1 className="text-xl font-bold ml-1">Your Tasksets</h1>
@@ -25,7 +26,7 @@ export default async function HomePage() {
             />
           </div>
         </div>
-        <DashboardTasksetList tasksets={tasksets} />
+        <TasksetPreviewList tasksets={tasksets} />
         <Link
           href="/tasksets"
           className="block w-fit ml-auto text-sm text-primary underline hover:text-primary-hover mt-3 mr-1"

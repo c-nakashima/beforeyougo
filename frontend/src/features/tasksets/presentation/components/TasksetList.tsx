@@ -2,8 +2,8 @@ import type { Taskset } from '@/features/tasksets/domain/type'
 import { BaseTasksetCard } from '@/features/tasksets/presentation/components/'
 
 /**
- * Tasksets page Taskset List Component
- *
+ * Taskset List Component for taskset page
+ * Show all tasksets
  * @property {string} tasksets - taskset list
  */
 type Props = {

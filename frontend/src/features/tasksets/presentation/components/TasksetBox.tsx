@@ -22,7 +22,6 @@ type Props = {
 export function TasksetBox({ tasksets }: Props) {
   // Search input state (stores the text entered by the user)
   const [search, setSearch] = useState('')
-
   // Keeps the list in sync immediately after a taskset is created
   const [displayedTasksets, setDisplayedTasksets] = useState(tasksets)
 

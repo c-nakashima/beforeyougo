@@ -1,5 +1,5 @@
 export { BaseTasksetCard } from './BaseTasksetCard'
-export { DashboardTasksetList } from './DashboardTasksetList'
+export { TasksetPreviewList } from './TasksetPreviewList'
 export { TasksetBox } from './TasksetBox'
 export { TasksetList } from './TasksetList'
 export { TasksetItem } from './TasksetItem'

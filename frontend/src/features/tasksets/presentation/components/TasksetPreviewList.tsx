@@ -2,18 +2,22 @@ import type { Taskset } from '@/features/tasksets/domain/type'
 import { BaseTasksetCard } from '@/features/tasksets/presentation/components/'
 
 /**
- * Dashboard Taskset List Component
+ * Taskset List Component for Dashboard
+ * Show limited number of tasksets for preview in dashboard page
+ * @property {Taskset[]} tasksets - taskset
  *
- * @property {Taslset[]} tasksets - taskset
  */
 type Props = {
   tasksets: Taskset[]
 }
 
-export function DashboardTasksetList({ tasksets }: Props) {
+export function TasksetPreviewList({ tasksets }: Props) {
+  // number of the displayed items
+  const DISPLAY_LIMIT: number = 8
+
   return (
     <ul className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
-      {tasksets.map((taskset) => (
+      {tasksets.slice(0, DISPLAY_LIMIT).map((taskset) => (
         <li key={taskset.id}>
           <BaseTasksetCard taskset={taskset} className="p-2" />
         </li>
