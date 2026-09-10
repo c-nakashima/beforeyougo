@@ -2,7 +2,7 @@
 
 import { type SyntheticEvent, useState } from 'react'
 
-import { Button } from '@/app/shared/components/ui'
+import { Button, Input } from '@/app/shared/components/ui'
 import { createTask } from '@/features/tasksets/application/createTask'
 import type { Task } from '@/features/tasksets/domain/type'
 
@@ -65,14 +65,15 @@ export function TaskList({ tasksetId, initialTasks }: Props) {
         <label htmlFor="new-task-title" className="sr-only">
           Add task
         </label>
-        <input
+        <Input
           id="new-task-title"
+          type="text"
           value={title}
-          onChange={(event) => setTitle(event.target.value)}
           placeholder={tasks.length === 0 ? 'Initial Task' : 'Add task'}
           maxLength={100}
           disabled={isSubmitting}
           className="min-w-0 flex-1 rounded-md border border-border bg-surface px-3 py-2 text-base text-foreground placeholder:text-muted focus:border-primary focus:outline-none disabled:opacity-50"
+          onChange={setTitle}
         />
         <Button
           text={isSubmitting ? 'Adding...' : 'Add'}

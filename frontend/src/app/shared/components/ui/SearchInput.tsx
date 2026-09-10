@@ -1,5 +1,6 @@
 import Icon from '@mdi/react'
 import { mdiMagnify } from '@mdi/js'
+import { Input } from '@/app/shared/components/ui'
 
 /**
  * Search Input Component
@@ -21,13 +22,12 @@ export function SearchInput({ value, onChange, className }: Props) {
           aria-hidden="true"
           className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"
         />
-
-        <input
+        <Input
           type="search"
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={onChange}
           placeholder="Search Taskset"
-          className="w-full rounded-lg bg-white border border border-slate-100 py-2 pl-10 pr-3 text-sm text-foreground placeholder:text-muted focus:border-primary focus:outline-none"
+          className="w-full pl-10 pr-3 text-sm text-foreground placeholder:text-muted focus:border-primary focus:outline-none"
         />
       </div>
     </div>
