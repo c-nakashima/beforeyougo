@@ -51,8 +51,17 @@ export function TaskList({ tasksetId, initialTasks }: Props) {
     }
   }
 
+  // Function to delete a task
   async function handleDelete(taskId: string) {
     if (deletingTaskId !== null) return
+
+    // task list before deletion
+    const previousTasks = tasks
+
+    // Optimistic UI : delete from the screen immediately
+    setTasks((currentTasks) =>
+      currentTasks.filter((task) => task.id !== taskId),
+    )
 
     try {
       setDeletingTaskId(taskId)
@@ -60,17 +69,15 @@ export function TaskList({ tasksetId, initialTasks }: Props) {
 
       await deleteTask(tasksetId, taskId)
 
-      // update task list
-      setTasks((currentTasks) =>
-        currentTasks.filter((task) => task.id !== taskId),
-      )
-
-      // update success massage (feedback)
+      // Only show the success message when the API succeeds
       setSuccessMessage('Task deleted successfully.')
+
       setTimeout(() => {
         setSuccessMessage('')
       }, 3000)
     } catch {
+      // If API failed restore the previous task list
+      setTasks(previousTasks)
       setError('Failed to delete task. Please try again.')
     } finally {
       setDeletingTaskId(null)
