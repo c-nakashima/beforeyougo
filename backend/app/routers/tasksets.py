@@ -234,7 +234,7 @@ def create_task(
       taskset_id,
       title,
       sort_order,
-      created_at
+      created_at,
       updated_at;
   """
 

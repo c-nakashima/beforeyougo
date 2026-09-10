@@ -1,4 +1,5 @@
 import type { TasksetDetail } from '@/features/tasksets/domain/type'
+import { TaskList } from './TaskList'
 
 /**
  * Taskset Detail Component
@@ -18,11 +19,10 @@ export function TasksetDetail({ tasksetDetail }: Props) {
           <p className="text-sm text-secondary">{tasksetDetail.description}</p>
         )}
       </div>
-      <ul>
-        {tasksetDetail.tasks.map((task) => (
-          <li key={task.id}>{task.title}</li>
-        ))}
-      </ul>
+      <TaskList
+        tasksetId={tasksetDetail.id}
+        initialTasks={tasksetDetail.tasks}
+      />
     </div>
   )
 }

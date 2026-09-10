@@ -30,3 +30,9 @@ export type CreateTasksetInput = {
   title: string
   description?: string
 }
+
+// Input to create a task
+export type CreateTaskInput = {
+  title: string
+  sort_order: number
+}
