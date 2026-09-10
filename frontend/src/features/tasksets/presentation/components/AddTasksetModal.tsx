@@ -118,7 +118,7 @@ export function AddTasksetModal({ onClose, onCreated }: Props) {
             className="mt-2 w-full resize-none rounded-md border border-border bg-surface px-3 py-2 text-sm focus:border-primary focus:outline-none"
           />
 
-          {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+          {error && <p className="mt-2 text-sm text-error">{error}</p>}
           <div className="mt-5 flex justify-end gap-2">
             <Button
               text="Cancel"

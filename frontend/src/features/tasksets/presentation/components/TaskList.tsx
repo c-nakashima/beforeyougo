@@ -5,7 +5,7 @@ import type { Task } from '@/features/tasksets/domain/type'
 import { createTask } from '@/features/tasksets/application/createTask'
 import { deleteTask } from '@/features/tasksets/application/deleteTask'
 
-import { Button, Input } from '@/app/shared/components/ui'
+import { Button, Input, Snackbar } from '@/app/shared/components/ui'
 
 /**
  * TaskList Component
@@ -22,6 +22,7 @@ export function TaskList({ tasksetId, initialTasks }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [deletingTaskId, setDeletingTaskId] = useState<string | null>(null)
+  const [successMessage, setSuccessMessage] = useState('')
 
   // Function to submit a task
   async function handleSubmit(event: SyntheticEvent<HTMLFormElement>) {
@@ -59,9 +60,16 @@ export function TaskList({ tasksetId, initialTasks }: Props) {
 
       await deleteTask(tasksetId, taskId)
 
+      // update task list
       setTasks((currentTasks) =>
         currentTasks.filter((task) => task.id !== taskId),
       )
+
+      // update success massage (feedback)
+      setSuccessMessage('Task deleted successfully.')
+      setTimeout(() => {
+        setSuccessMessage('')
+      }, 3000)
     } catch {
       setError('Failed to delete task. Please try again.')
     } finally {
@@ -86,7 +94,7 @@ export function TaskList({ tasksetId, initialTasks }: Props) {
                 onClick={() => void handleDelete(task.id)}
                 disabled={deletingTaskId !== null}
                 ariaLabel={`Delete ${task.title}`}
-                className="ml-1 rounded-sm text-muted transition hover:text-red-600"
+                className="ml-1 rounded-sm text-muted transition hover:text-error"
               />
             </li>
           ))}
@@ -116,10 +124,12 @@ export function TaskList({ tasksetId, initialTasks }: Props) {
       </form>
 
       {error && (
-        <p className="mt-2 text-sm text-red-600" role="alert">
+        <p className="mt-2 text-sm text-error" role="alert">
           {error}
         </p>
       )}
+
+      {successMessage && <Snackbar message={successMessage} />}
     </div>
   )
 }
