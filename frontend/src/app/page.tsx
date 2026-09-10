@@ -30,7 +30,7 @@ export default async function HomePage() {
           href="/tasksets"
           className="block w-fit ml-auto text-sm text-primary underline hover:text-primary-hover mt-3 mr-1"
         >
-          View tasksets
+          View All tasksets
         </Link>
       </div>
     </main>
