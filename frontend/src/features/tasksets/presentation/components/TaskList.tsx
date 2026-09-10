@@ -1,10 +1,11 @@
 'use client'
-
 import { type SyntheticEvent, useState } from 'react'
+import { mdiDelete } from '@mdi/js'
+import type { Task } from '@/features/tasksets/domain/type'
+import { createTask } from '@/features/tasksets/application/createTask'
+import { deleteTask } from '@/features/tasksets/application/deleteTask'
 
 import { Button, Input } from '@/app/shared/components/ui'
-import { createTask } from '@/features/tasksets/application/createTask'
-import type { Task } from '@/features/tasksets/domain/type'
 
 /**
  * TaskList Component
@@ -20,6 +21,7 @@ export function TaskList({ tasksetId, initialTasks }: Props) {
   const [title, setTitle] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
+  const [deletingTaskId, setDeletingTaskId] = useState<string | null>(null)
 
   // Function to submit a task
   async function handleSubmit(event: SyntheticEvent<HTMLFormElement>) {
@@ -48,14 +50,44 @@ export function TaskList({ tasksetId, initialTasks }: Props) {
     }
   }
 
+  async function handleDelete(taskId: string) {
+    if (deletingTaskId !== null) return
+
+    try {
+      setDeletingTaskId(taskId)
+      setError('')
+
+      await deleteTask(tasksetId, taskId)
+
+      setTasks((currentTasks) =>
+        currentTasks.filter((task) => task.id !== taskId),
+      )
+    } catch {
+      setError('Failed to delete task. Please try again.')
+    } finally {
+      setDeletingTaskId(null)
+    }
+  }
+
   return (
     <div>
       {tasks.length > 0 && (
         <ul className="my-5 space-y-3" aria-label="Tasks">
           {tasks.map((task) => (
-            <li key={task.id} className="flex gap-3 text-base">
-              <span aria-hidden="true">-</span>
-              <span>{task.title}</span>
+            <li key={task.id} className="flex items-center text-base">
+              <span aria-hidden="true" className="mr-2">
+                -
+              </span>
+              <span className="mr-1">{task.title}</span>
+              <Button
+                type="button"
+                text=""
+                iconPath={mdiDelete}
+                onClick={() => void handleDelete(task.id)}
+                disabled={deletingTaskId !== null}
+                ariaLabel={`Delete ${task.title}`}
+                className="ml-1 rounded-sm text-muted transition hover:text-red-600"
+              />
             </li>
           ))}
         </ul>

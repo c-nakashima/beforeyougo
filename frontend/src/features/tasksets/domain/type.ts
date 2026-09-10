@@ -36,3 +36,8 @@ export type CreateTaskInput = {
   title: string
   sort_order: number
 }
+
+//Delete task's response
+export type DeleteTaskResult = {
+  id: string
+}

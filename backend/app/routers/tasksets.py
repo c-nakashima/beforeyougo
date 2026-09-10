@@ -6,6 +6,7 @@ from psycopg2 import Error
 
 from app.db import get_connection
 
+# Classess ==================================
 # Create a taskset
 class TasksetCreate(BaseModel):
   title: str = Field(
@@ -28,7 +29,6 @@ class TaskCreate(BaseModel):
     ge=0,
   )
 
-
 # Update task run item
 class TaskRunItemUpdate(BaseModel):
   checked: bool
@@ -38,7 +38,7 @@ router = APIRouter(
   tags=["tasksets"],
 )
 
-
+# Endpoints
 # Get taskset runnning history
 @router.get("/history")
 def get_history():
@@ -274,6 +274,47 @@ def create_task(
       detail="Failed to create task",
     ) from error
 
+# Delete a task
+@router.delete("/{taskset_id}/tasks/{task_id}")
+def delete_task(
+    taskset_id: UUID,
+    task_id: UUID,
+):
+    query = """
+        DELETE FROM tasks
+        WHERE id = %s
+          AND taskset_id = %s
+        RETURNING id;
+    """
+
+    try:
+        with get_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    query,
+                    (
+                        str(task_id),
+                        str(taskset_id),
+                    ),
+                )
+                deleted_task = cursor.fetchone()
+
+                if deleted_task is None:
+                    raise HTTPException(
+                        status_code=status.HTTP_404_NOT_FOUND,
+                        detail="Task not found",
+                    )
+
+        return deleted_task
+
+    except HTTPException:
+        raise
+
+    except Error as error:
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to delete task",
+        ) from error
 
 # Run a taskset
 @router.post("/{taskset_id}/runs", status_code=status.HTTP_201_CREATED)
