@@ -10,7 +10,7 @@ import { mdiMenu } from '@mdi/js'
 
 export function Header() {
   return (
-    <header className="grid h-full grid-cols-[1fr_auto_1fr] items-center py-3">
+    <header className="mx-auto max-w-md md:max-w-2xl lg:max-w-4xl grid h-full grid-cols-[1fr_auto_1fr] items-center py-3 px-5">
       <div aria-hidden="true" />
       <h1 className="items-center">
         <Link
