@@ -274,6 +274,44 @@ def create_task(
       detail="Failed to create task",
     ) from error
 
+# Delete a taskset
+@router.delete("/{taskset_id}")
+def delete_taskset(
+    taskset_id: UUID,
+):
+    query = """
+        DELETE FROM tasksets
+        WHERE id = %s
+        RETURNING id;
+    """
+
+    try:
+        with get_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    query,
+                    (str(taskset_id),),
+                )
+                deleted_taskset = cursor.fetchone()
+
+                if deleted_taskset is None:
+                    raise HTTPException(
+                        status_code=status.HTTP_404_NOT_FOUND,
+                        detail="Taskset not found",
+                    )
+
+        return deleted_taskset
+
+    except HTTPException:
+        raise
+
+    except Error as error:
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to delete taskset",
+        ) from error
+
+
 # Delete a task
 @router.delete("/{taskset_id}/tasks/{task_id}")
 def delete_task(

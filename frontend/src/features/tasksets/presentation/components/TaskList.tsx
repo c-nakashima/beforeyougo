@@ -20,8 +20,8 @@ export function TaskList({ tasksetId, initialTasks }: Props) {
   const [tasks, setTasks] = useState(initialTasks)
   const [title, setTitle] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [error, setError] = useState('')
   const [deletingTaskId, setDeletingTaskId] = useState<string | null>(null)
+  const [error, setError] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
 
   // Function to submit a task
@@ -124,7 +124,7 @@ export function TaskList({ tasksetId, initialTasks }: Props) {
                 onClick={() => void handleDelete(task.id)}
                 disabled={deletingTaskId !== null}
                 ariaLabel={`Delete ${task.title}`}
-                className="ml-1 rounded-sm text-muted transition hover:text-error"
+                className="ml-1 rounded-sm text-icon-muted transition hover:text-muted/50"
               />
             </li>
           ))}

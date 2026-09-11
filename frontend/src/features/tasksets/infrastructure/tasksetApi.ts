@@ -6,6 +6,7 @@ import type {
   CreateTaskInput,
   Task,
   DeleteTaskResult,
+  DeleteTasksetResult,
 } from '@/features/tasksets/domain/type'
 
 export async function fetchTasksets(): Promise<Taskset[]> {
@@ -34,6 +35,12 @@ export async function createTask(
   return apiClient<Task>(`/tasksets/${tasksetId}/tasks`, {
     method: 'POST',
     body: JSON.stringify(input),
+  })
+}
+
+export async function deleteTaskset(id: string): Promise<DeleteTasksetResult> {
+  return apiClient<DeleteTasksetResult>(`/tasksets/${id}`, {
+    method: 'DELETE',
   })
 }
 

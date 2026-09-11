@@ -21,7 +21,7 @@
   --neutral-300: #d4d4d4;
   --neutral-400: #a1a1a1;
   --neutral-900: #171717;
-  --red-600: #dc2626;
+  --rose-600: #dc2626;
   --slate-400: #94a3b8;
   --slate-500: #64748b;
   --slate-600: #4a5565;
@@ -37,7 +37,8 @@
 
   /* Text */
   --text-secondary: var(--slate-600);
-  --error: var(--red-600);
+  --error: var(--rose-600);
+  --icon-muted: var(--neutral-400);
 
   --muted: var(--slate-500);
   --border: var(--turkish-rose-200);
@@ -68,6 +69,7 @@
   --color-surface: var(--surface);
   --color-surface-muted: var(--surface-muted);
   --color-error: var(--error);
+  --color-icon-muted: var(--icon-muted);
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-primary: var(--primary);
