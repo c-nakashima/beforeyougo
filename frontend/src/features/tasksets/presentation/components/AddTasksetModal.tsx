@@ -8,21 +8,20 @@ import type { Taskset } from '@/features/tasksets/domain/type'
 
 import { Button } from '@/app/shared/components/ui'
 
+/**
+ * Taskset Modal Component
+ * Add a new taskset and redirect to the created tasksets' detail page
+ */
 type Props = {
   onClose: () => void
   onCreated: (taskset: Taskset) => void
 }
 
 export function AddTasksetModal({ onClose, onCreated }: Props) {
-  // Stores the taskset title entered by the user
   const [title, setTitle] = useState('')
-
-  // Stores the optional taskset description entered by the user
   const [description, setDescription] = useState('')
-
   // Tracks whether the taskset is currently being submitted
   const [isSubmitting, setIsSubmitting] = useState(false)
-
   // Stores an error message if validation or API request fails
   const [error, setError] = useState('')
 
@@ -56,7 +55,8 @@ export function AddTasksetModal({ onClose, onCreated }: Props) {
 
       onCreated(createdTaskset)
       onClose()
-      router.refresh()
+      //redirect to the created taskset detail page
+      router.push(`/tasksets/${createdTaskset.id}`)
     } catch {
       setError('Failed to create taskset.')
     } finally {
