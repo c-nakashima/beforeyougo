@@ -10,6 +10,7 @@ import { Button, Input, Snackbar } from '@/app/shared/components/ui'
 /**
  * TaskList Component
  * Shows task list on the detail page
+ * Add a task and delete a task
  */
 type Props = {
   tasksetId: string

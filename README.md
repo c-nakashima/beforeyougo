@@ -158,17 +158,23 @@ NEXT_PUBLIC_API_URL=http://127.0.0.1:8000/api/backend
 
 ## Quality Checks
 
-Run the frontend linter:
+Run the following checks from the frontend directory before committing changes:
 
 ```bash
 cd frontend
+npm test
 npm run lint
+npm run build
 ```
 
-Verify the production build:
+- `npm test` runs the frontend test suite once.
+- `npm run lint` checks the source code with ESLint.
+- `npm run build` verifies that the application can be compiled for production.
+
+While writing tests, use watch mode to rerun them automatically after changes:
 
 ```bash
-npm run build
+npm run test:watch
 ```
 
 ## Roadmap
