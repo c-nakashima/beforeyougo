@@ -12,10 +12,8 @@ type Props = {
 
 export function TasksetDetailBox({ tasksetDetail }: Props) {
   return (
-    <div>
-      <section className="mx-auto max-w-md p-6 md:max-w-2xl lg:max-w-4xl">
-        <TasksetDetail tasksetDetail={tasksetDetail} />
-      </section>
-    </div>
+    <section>
+      <TasksetDetail tasksetDetail={tasksetDetail} />
+    </section>
   )
 }

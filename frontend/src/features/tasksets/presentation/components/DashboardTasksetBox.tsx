@@ -1,10 +1,9 @@
 'use client'
 
-import Link from 'next/link'
 import type { Taskset } from '@/features/tasksets/domain/type'
 import { mdiPlus } from '@mdi/js'
 
-import { Button } from '@/app/shared/components/ui'
+import { Button, TextLink } from '@/app/shared/components/ui'
 import { TasksetPreviewList } from '@/features/tasksets/presentation/components/'
 
 /**
@@ -21,7 +20,10 @@ export function DashboardTasksetBox({ tasksets }: Props) {
   return (
     <div className="mx-auto max-w-md md:max-w-2xl lg:max-w-4xl p-5">
       <div className="mb-6 flex items-center justify-between mb-3">
-        <h1 className="text-xl font-bold ml-1">Your Tasksets</h1>
+        <div className="flex items-baseline">
+          <h1 className="text-xl font-bold mr-3">Your Tasksets</h1>
+          <TextLink href="/tasksets" text="View All tasksets" />
+        </div>
         <div className="flex shrink-0 items-center gap-2">
           <Button
             iconPath={mdiPlus}
@@ -31,12 +33,6 @@ export function DashboardTasksetBox({ tasksets }: Props) {
         </div>
       </div>
       <TasksetPreviewList tasksets={tasksets} />
-      <Link
-        href="/tasksets"
-        className="block w-fit ml-auto text-sm text-primary underline hover:text-primary-hover mt-3 mr-1"
-      >
-        View All tasksets
-      </Link>
     </div>
   )
 }
