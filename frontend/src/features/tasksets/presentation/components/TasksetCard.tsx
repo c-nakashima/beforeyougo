@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { Taskset } from '@/features/tasksets/domain/type'
 
 /**
- * Taskset Card Base Component
+ * Taskset Card Component
  *
  * @property {string} taskset - taskset
  */
@@ -11,7 +11,7 @@ type Props = {
   className?: string
 }
 
-export function BaseTasksetCard({ taskset, className }: Props) {
+export function TasksetCard({ taskset, className }: Props) {
   return (
     <Link
       href={`/tasksets/${taskset.id}`}

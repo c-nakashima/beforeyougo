@@ -1,10 +1,13 @@
 import { getTasksetDetail } from '@/features/tasksets/application/getTasksetDetail'
+import { Header } from '@/app/shared/components/layout'
 import { TasksetDetailBox } from '@/features/tasksets/presentation/components'
 
 /**
- * Taskset Detail Page
- * Display a taskset's list and let user to view/run/add tasks
- *  @property {string} tasksetId - taskset id
+ * Taskset detail page.
+ *
+ * Fetches the selected taskset and its tasks on the server, then passes
+ * the data to `TasksetDetailBox`, which handles the layout and interactions.
+ *
  */
 type Props = {
   params: {
@@ -17,7 +20,8 @@ export default async function TasksetsPage({ params }: Props) {
   const tasksetDetail = await getTasksetDetail(tasksetId)
 
   return (
-    <main>
+    <main className="min-h-screen">
+      <Header />
       <TasksetDetailBox tasksetDetail={tasksetDetail} />
     </main>
   )

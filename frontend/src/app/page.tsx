@@ -1,39 +1,23 @@
-import Link from 'next/link'
-import { mdiPlus } from '@mdi/js'
-
 export const dynamic = 'force-dynamic'
 
-import { Header } from '@/app/shared/components/layout'
-import { Button } from '@/app/shared/components/ui'
-
-import { TasksetPreviewList } from '@/features/tasksets/presentation/components/'
 import { getTasksets } from '@/features/tasksets/application/getTasksets'
 
+import { Header } from '@/app/shared/components/layout'
+import { DashboardTasksetBox } from '@/features/tasksets/presentation/components'
+
+/**
+ * Dashboard Home Page
+ *
+ * Fetches the user's tasksets on the server and passes them to
+ * `DashboardTasksetBox`, which handles the dashboard layout and interactions.
+ */
 export default async function HomePage() {
   const tasksets = await getTasksets()
+
   return (
     <main className="min-h-screen">
       <Header />
-
-      <div className="mx-auto max-w-md md:max-w-2xl lg:max-w-4xl p-5">
-        <div className="mb-6 flex items-center justify-between mb-3">
-          <h1 className="text-xl font-bold ml-1">Your Tasksets</h1>
-          <div className="flex shrink-0 items-center gap-2">
-            <Button
-              iconPath={mdiPlus}
-              text="Add"
-              className="inline-flex items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white"
-            />
-          </div>
-        </div>
-        <TasksetPreviewList tasksets={tasksets} />
-        <Link
-          href="/tasksets"
-          className="block w-fit ml-auto text-sm text-primary underline hover:text-primary-hover mt-3 mr-1"
-        >
-          View All tasksets
-        </Link>
-      </div>
+      <DashboardTasksetBox tasksets={tasksets} />
     </main>
   )
 }

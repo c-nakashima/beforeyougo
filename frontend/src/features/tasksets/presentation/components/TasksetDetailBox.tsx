@@ -1,10 +1,10 @@
 import type { TasksetDetail as TasksetDetailType } from '@/features/tasksets/domain/type'
 
-import { Header } from '@/app/shared/components/layout'
 import { TasksetDetail } from '@/features/tasksets/presentation/components'
 
 /**
- * Page layout for a taskset detail.
+ * Displays the content and layout for a taskset detail.
+ * Provides the page layout for the taskset detail page.
  */
 type Props = {
   tasksetDetail: TasksetDetailType
@@ -13,10 +13,9 @@ type Props = {
 export function TasksetDetailBox({ tasksetDetail }: Props) {
   return (
     <div>
-      <Header />
-      <div className="mx-auto max-w-md p-6 md:max-w-2xl lg:max-w-4xl">
+      <section className="mx-auto max-w-md p-6 md:max-w-2xl lg:max-w-4xl">
         <TasksetDetail tasksetDetail={tasksetDetail} />
-      </div>
+      </section>
     </div>
   )
 }

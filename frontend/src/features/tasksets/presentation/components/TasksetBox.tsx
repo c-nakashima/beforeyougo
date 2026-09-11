@@ -10,9 +10,7 @@ import {
 } from '@/features/tasksets/presentation/components/'
 
 /**
- * Taskset Box Component
- * Recieve tasksets data and display with components
- *  @property {string} tasksets - taskset list
+ * Provides the dashboard layout and interactions for tasksets.
  */
 type Props = {
   tasksets: Taskset[]

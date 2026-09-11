@@ -1,5 +1,5 @@
 import type { Taskset } from '@/features/tasksets/domain/type'
-import { BaseTasksetCard } from '@/features/tasksets/presentation/components/'
+import { TasksetCard } from '@/features/tasksets/presentation/components/'
 
 /**
  * Taskset List Component for Dashboard
@@ -19,7 +19,7 @@ export function TasksetPreviewList({ tasksets }: Props) {
     <ul className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
       {tasksets.slice(0, DISPLAY_LIMIT).map((taskset) => (
         <li key={taskset.id}>
-          <BaseTasksetCard taskset={taskset} className="p-2" />
+          <TasksetCard taskset={taskset} className="p-2" />
         </li>
       ))}
     </ul>
