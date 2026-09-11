@@ -26,11 +26,6 @@ export function DashboardTasksetBox({ tasksets }: Props) {
           <TextLink href="/tasksets" text="View All tasksets" />
         </div>
         <div className="flex shrink-0 items-center gap-2">
-          {/* <Button
-            iconPath={mdiPlus}
-            text="Add"
-            className="inline-flex items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white"
-          /> */}
           <AddTasksetButton />
         </div>
       </div>

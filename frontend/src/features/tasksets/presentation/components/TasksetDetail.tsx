@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { mdiDelete } from '@mdi/js'
 import { deleteTaskset } from '@/features/tasksets/application/deleteTaskset'
 
-import { Button, Snackbar } from '@/app/shared/components/ui'
+import { Button } from '@/app/shared/components/ui'
 import type { TasksetDetail } from '@/features/tasksets/domain/type'
 import { TaskList } from './TaskList'
 
@@ -19,13 +19,11 @@ type Props = {
 }
 
 export function TasksetDetail({ tasksetDetail }: Props) {
+  const router = useRouter()
   const [deletingTasksetId, setDeletingTasksetId] = useState<string | null>(
     null,
   )
   const [error, setError] = useState('')
-  const [successMessage, setSuccessMessage] = useState('')
-
-  const router = useRouter()
 
   // Function to delete a taskset
   async function handleDelete() {
@@ -43,13 +41,8 @@ export function TasksetDetail({ tasksetDetail }: Props) {
 
       await deleteTaskset(tasksetDetail.id)
 
-      // Only show the success message when the API succeeds
-      setSuccessMessage('Taskset deleted successfully.')
-      router.push('/tasksets')
-
-      setTimeout(() => {
-        setSuccessMessage('')
-      }, 3000)
+      // Redirect to taskset list and show success message
+      router.push('/tasksets?deleted=true')
     } catch {
       // If API failed restore the previous task list
       setError('Failed to delete taskset. Please try again.')
@@ -86,8 +79,6 @@ export function TasksetDetail({ tasksetDetail }: Props) {
         tasksetId={tasksetDetail.id}
         initialTasks={tasksetDetail.tasks}
       />
-
-      {successMessage && <Snackbar message={successMessage} />}
     </div>
   )
 }

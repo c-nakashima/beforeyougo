@@ -1,8 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import type { Taskset } from '@/features/tasksets/domain/type'
 import { Header } from '@/app/shared/components/layout'
+import { Snackbar } from '@/app/shared/components/ui'
 import { SearchInput } from '@/app/shared/components/ui'
 import {
   TasksetList,
@@ -18,6 +20,22 @@ type Props = {
 }
 
 export function TasksetBox({ tasksets }: Props) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  // when redirected from taskset deletion
+  const isDeleted = searchParams.get('deleted') === 'true'
+
+  useEffect(() => {
+    if (!isDeleted) return
+
+    const timeoutId = window.setTimeout(() => {
+      // delete query parameter from url to prevent showing snackbar again
+      router.replace('/tasksets', { scroll: false })
+    }, 3000)
+
+    return () => window.clearTimeout(timeoutId)
+  }, [isDeleted, router])
+
   // Search input state (stores the text entered by the user)
   const [search, setSearch] = useState('')
   // Keeps the list in sync immediately after a taskset is created
@@ -57,6 +75,7 @@ export function TasksetBox({ tasksets }: Props) {
         />
         <TasksetList tasksets={filteredTasksets} />
       </div>
+      {isDeleted && <Snackbar message="Taskset deleted successfully." />}
     </div>
   )
 }
