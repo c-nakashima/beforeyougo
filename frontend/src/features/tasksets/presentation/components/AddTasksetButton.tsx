@@ -1,11 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-
 import { mdiPlus } from '@mdi/js'
+
 import { Button } from '@/app/shared/components/ui'
 import type { Taskset } from '@/features/tasksets/domain/type'
-import { AddTasksetModal } from './AddTasksetModal'
+import { AddTasksetModal } from '@/features/tasksets/presentation/components/'
 
 /**
  * Add Button Component
@@ -14,14 +14,10 @@ import { AddTasksetModal } from './AddTasksetModal'
 type Props = {
   className?: string
   ariaLabel?: string
-  onCreated: (taskset: Taskset) => void
+  onCreated?: (taskset: Taskset) => void
 }
 
-export function AddTasksetButton({
-  className,
-  ariaLabel,
-  onCreated,
-}: Props) {
+export function AddTasksetButton({ className, ariaLabel }: Props) {
   // Controls whether the Add Taskset modal is open
   const [isOpen, setIsOpen] = useState(false)
 
@@ -37,13 +33,7 @@ export function AddTasksetButton({
           'inline-flex cursor-pointer items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white'
         }
       />
-
-      {isOpen && (
-        <AddTasksetModal
-          onClose={() => setIsOpen(false)}
-          onCreated={onCreated}
-        />
-      )}
+      {isOpen && <AddTasksetModal onClose={() => setIsOpen(false)} />}
     </>
   )
 }

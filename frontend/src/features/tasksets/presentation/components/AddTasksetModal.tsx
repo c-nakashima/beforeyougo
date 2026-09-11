@@ -4,7 +4,6 @@ import { type MouseEvent, type SyntheticEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { createTaskset } from '@/features/tasksets/application/createTaskset'
-import type { Taskset } from '@/features/tasksets/domain/type'
 
 import { Button } from '@/app/shared/components/ui'
 
@@ -14,10 +13,9 @@ import { Button } from '@/app/shared/components/ui'
  */
 type Props = {
   onClose: () => void
-  onCreated: (taskset: Taskset) => void
 }
 
-export function AddTasksetModal({ onClose, onCreated }: Props) {
+export function AddTasksetModal({ onClose }: Props) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   // Tracks whether the taskset is currently being submitted
@@ -53,7 +51,6 @@ export function AddTasksetModal({ onClose, onCreated }: Props) {
         description: trimmedDescription || undefined,
       })
 
-      onCreated(createdTaskset)
       onClose()
       //redirect to the created taskset detail page
       router.push(`/tasksets/${createdTaskset.id}`)
