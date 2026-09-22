@@ -49,6 +49,29 @@ domain          Types and domain models
 infrastructure  API communication
 ```
 
+### Taskset run naming
+
+The word `History` is reserved for pages and UI that display taskset runs.
+Data types and variables use `Run` names so that a run is not mistaken for a
+separate history entity.
+
+| Concept | Name |
+| --- | --- |
+| History page or UI | `RunHistory` |
+| Collection of run summaries | `runs` |
+| One run summary | `run` |
+| Run summary type | `TasksetRunSummary` |
+| Run status type | `TasksetRunStatus` |
+| Checklist item within a run | `TaskRunItem` |
+
+The same naming extends to the future single-run screen:
+
+```text
+TasksetRunDetail  One complete run
+TaskRunItem[]     Checklist items belonging to the run
+/runs/[runId]     Route for viewing or continuing the run
+```
+
 The main project structure is shown below:
 
 ```text
