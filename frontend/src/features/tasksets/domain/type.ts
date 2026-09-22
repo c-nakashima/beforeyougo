@@ -46,3 +46,18 @@ export type DeleteTasksetResult = {
 export type DeleteTaskResult = {
   id: string
 }
+
+// Taskset Run Status
+export type TasksetRunStatus = 'wip' | 'done' | 'cancelled'
+
+// Taskset Run History
+export type TasksetRunHistory = {
+  id: string
+  taskset_id: string
+  taskset_title: string
+  status: TasksetRunStatus
+  started_at: string
+  completed_at: string | null
+  total_items: number
+  checked_items: number
+}
