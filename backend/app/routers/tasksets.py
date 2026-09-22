@@ -39,7 +39,7 @@ router = APIRouter(
 )
 
 # Endpoints
-# Get taskset runnning history
+# Get taskset running history
 @router.get("/history")
 def get_history():
     query = """

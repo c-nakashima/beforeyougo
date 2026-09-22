@@ -50,8 +50,8 @@ export type DeleteTaskResult = {
 // Taskset Run Status
 export type TasksetRunStatus = 'wip' | 'done' | 'cancelled'
 
-// Taskset Run History
-export type TasksetRunHistory = {
+// Taskset Run History item
+export type TasksetRunSummary = {
   id: string
   taskset_id: string
   taskset_title: string
@@ -61,3 +61,25 @@ export type TasksetRunHistory = {
   total_items: number
   checked_items: number
 }
+
+//TODO Check when develop the run detail page
+// // Checked item in a run
+// export type TaskRunItem = {
+//   id: string
+//   task_id: string | null
+//   title_snapshot: string
+//   sort_order: number
+//   checked: boolean
+//   checked_at: string | null
+// }
+
+// // Run
+// export type TasksetRunDetail = {
+//   id: string
+//   taskset_id: string
+//   taskset_title: string
+//   status: TasksetRunStatus
+//   started_at: string
+//   completed_at: string | null
+//   items: TaskRunItem[]
+// }

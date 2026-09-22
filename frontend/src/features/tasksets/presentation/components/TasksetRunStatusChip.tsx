@@ -3,16 +3,15 @@ import { mdiCheckCircle, mdiProgressClock, mdiCloseCircle } from '@mdi/js'
 import type { TasksetRunStatus } from '@/features/tasksets/domain/type'
 
 /**
- * Taskset Card Component
+ * Taskset Run Status Chip Component
  *
- * @property {string} taskset - taskset
  */
 type Props = {
-  tasksetRunStatus: TasksetRunStatus
+  status: TasksetRunStatus
   className?: string
 }
 
-export function RunHistoryStatusChip({ tasksetRunStatus, className }: Props) {
+export function TasksetRunStatusChip({ status, className }: Props) {
   const statusConfig = {
     done: {
       label: 'Done',
@@ -30,11 +29,11 @@ export function RunHistoryStatusChip({ tasksetRunStatus, className }: Props) {
       className: 'bg-error',
     },
   }
-  const config = statusConfig[tasksetRunStatus]
+  const config = statusConfig[status]
 
   return (
     <span
-      className={`flex items-center rounded-xl bg-success text-white py-1 px-2 ${className ?? ''} ${config.className}`}
+      className={`flex items-center rounded-xl text-white py-1 px-2 ${className ?? ''} ${config.className}`}
     >
       <Icon
         path={config.icon}

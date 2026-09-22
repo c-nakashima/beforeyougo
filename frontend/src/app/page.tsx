@@ -1,12 +1,12 @@
 export const dynamic = 'force-dynamic'
 
 import { getTasksets } from '@/features/tasksets/application/getTasksets'
-import { getTasksetRunHistory } from '@/features/tasksets/application/getTasksetRunHistory'
+import { getTasksetRunSummaries } from '@/features/tasksets/application/getTasksetRunSummaries'
 
 import { Header } from '@/app/shared/components/layout'
 import {
   DashboardTasksetBox,
-  DashboardTasksetRunHistoryBox,
+  DashboardRunHistoryBox,
 } from '@/features/tasksets/presentation/components'
 
 /**
@@ -16,14 +16,16 @@ import {
  * `DashboardTasksetBox`, which handles the dashboard layout and interactions.
  */
 export default async function HomePage() {
-  const tasksets = await getTasksets()
-  const tasksetRunHistory = await getTasksetRunHistory()
+  const [tasksets, runs] = await Promise.all([
+    getTasksets(),
+    getTasksetRunSummaries(),
+  ])
 
   return (
     <main className="min-h-screen mb-20">
       <Header />
       <DashboardTasksetBox tasksets={tasksets} className="mb-5" />
-      <DashboardTasksetRunHistoryBox tasksetRunHistory={tasksetRunHistory} />
+      <DashboardRunHistoryBox runs={runs} />
     </main>
   )
 }

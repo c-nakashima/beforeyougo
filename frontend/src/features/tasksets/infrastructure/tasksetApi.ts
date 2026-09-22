@@ -7,7 +7,7 @@ import type {
   Task,
   DeleteTaskResult,
   DeleteTasksetResult,
-  TasksetRunHistory,
+  TasksetRunSummary,
 } from '@/features/tasksets/domain/type'
 
 export async function fetchTasksets(): Promise<Taskset[]> {
@@ -54,6 +54,6 @@ export async function deleteTask(
   })
 }
 
-export async function fetchTasksetRunHistory(): Promise<TasksetRunHistory[]> {
-  return apiClient<TasksetRunHistory[]>('/tasksets/history')
+export async function fetchTasksetRunSummaries(): Promise<TasksetRunSummary[]> {
+  return apiClient<TasksetRunSummary[]>('/tasksets/history')
 }
