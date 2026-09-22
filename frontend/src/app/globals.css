@@ -22,6 +22,8 @@
   --neutral-400: #a1a1a1;
   --neutral-900: #171717;
   --rose-600: #dc2626;
+  --green-400: #00c951;
+  --yellow-400: #efb100;
   --slate-400: #94a3b8;
   --slate-500: #64748b;
   --slate-600: #4a5565;
@@ -37,6 +39,8 @@
 
   /* Text */
   --text-secondary: var(--slate-600);
+  --success: var(--green-400);
+  --warning: var(--yellow-400);
   --error: var(--rose-600);
   --icon-muted: var(--neutral-400);
 
@@ -68,6 +72,8 @@
   --color-foreground: var(--foreground);
   --color-surface: var(--surface);
   --color-surface-muted: var(--surface-muted);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
   --color-error: var(--error);
   --color-icon-muted: var(--icon-muted);
   --color-muted: var(--muted);

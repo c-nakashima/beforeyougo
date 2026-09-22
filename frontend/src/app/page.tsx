@@ -1,9 +1,13 @@
 export const dynamic = 'force-dynamic'
 
 import { getTasksets } from '@/features/tasksets/application/getTasksets'
+import { getTasksetRunHistory } from '@/features/tasksets/application/getTasksetRunHistory'
 
 import { Header } from '@/app/shared/components/layout'
-import { DashboardTasksetBox } from '@/features/tasksets/presentation/components'
+import {
+  DashboardTasksetBox,
+  DashboardTasksetRunHistoryBox,
+} from '@/features/tasksets/presentation/components'
 
 /**
  * Dashboard Home Page
@@ -13,11 +17,13 @@ import { DashboardTasksetBox } from '@/features/tasksets/presentation/components
  */
 export default async function HomePage() {
   const tasksets = await getTasksets()
+  const tasksetRunHistory = await getTasksetRunHistory()
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen mb-20">
       <Header />
-      <DashboardTasksetBox tasksets={tasksets} />
+      <DashboardTasksetBox tasksets={tasksets} className="mb-5" />
+      <DashboardTasksetRunHistoryBox tasksetRunHistory={tasksetRunHistory} />
     </main>
   )
 }
