@@ -372,7 +372,7 @@ def create_taskset_run(
             sort_order
         FROM tasks
         WHERE taskset_id = %s
-        ORDER BY sort_order ASC;
+        ORDER BY sort_order ASC, created_at ASC, id ASC;
     """
 
     create_run_query = """
