@@ -477,7 +477,7 @@ def create_taskset_run(
         
 
 # Update a task run item
-@router.patch("task-run-items/{item_id}")
+@router.patch("/task-run-items/{item_id}")
 def update_task_run_item(
   item_id: UUID,
   item_update: TaskRunItemUpdate,
@@ -496,6 +496,7 @@ def update_task_run_item(
             taskset_run_id,
             task_id,
             title_snapshot,
+            sort_order,
             checked,
             checked_at;
     """
