@@ -535,12 +535,20 @@ def update_task_run_item(
 # Complete a running taskset
 @router.post("/taskset-runs/{run_id}/complete")
 def complete_taskset_run(run_id: UUID):
+
+  count_unchecked_items_query = """
+      SELECT COUNT(*) as unchecked_count
+      FROM task_run_items
+      WHERE taskset_run_id = %s
+        AND checked = false;
+  """
+
   complete_query = """
       UPDATE taskset_runs
       SET
           status = 'done',
           completed_at = NOW()
-      WHERE id = %s,
+      WHERE id = %s
       RETURNING
           id,
           taskset_id,
@@ -552,6 +560,20 @@ def complete_taskset_run(run_id: UUID):
   try:
     with get_connection() as connection:
       with connection.cursor() as cursor:
+        # count unchecked items
+        cursor.execute(
+          count_unchecked_items_query,
+          (str(run_id),)
+        )
+        unchecked_count = cursor.fetchone()["unchecked_count"]
+        # if there are unchecked items, raise an error
+        if unchecked_count > 0:
+          raise HTTPException(
+            status_code = status.HTTP_400_BAD_REQUEST,
+            detail = "Cannot complete a run with unchecked items"
+        )
+
+        # complete the run if all items are checked
         cursor.execute(
           complete_query,
           (str(run_id),)
