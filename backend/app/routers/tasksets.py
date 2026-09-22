@@ -394,14 +394,16 @@ def create_taskset_run(
             taskset_run_id,
             task_id,
             title_snapshot,
+            sort_order,
             checked
         )
-        VALUES (%s, %s, %s, false)
+        VALUES (%s, %s, %s, %s, false)
         RETURNING
             id,
             taskset_run_id,
             task_id,
             title_snapshot,
+            sort_order,
             checked,
             checked_at;
     """
@@ -452,6 +454,7 @@ def create_taskset_run(
                             created_run["id"],
                             task["id"],
                             task["title"],
+                            task["sort_order"],
                         ),
                     )
                     run_item = cursor.fetchone()

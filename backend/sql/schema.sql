@@ -33,6 +33,7 @@ CREATE TABLE task_run_items (
   task_id UUID
     REFERENCES tasks(id) ON DELETE SET NULL,
   title_snapshot TEXT NOT NULL,
+  sort_order INTEGER NOT NULL DEFAULT 0 CHECK (sort_order >= 0),
   checked BOOLEAN NOT NULL DEFAULT FALSE,
   checked_at TIMESTAMPTZ
 );
