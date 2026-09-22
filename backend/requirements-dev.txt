@@ -1,0 +1,6 @@
+# Install backend dependencies for development and testing with:
+# pip install -r requirements-dev.txt
+-r requirements.txt
+
+# Required by FastAPI's TestClient.
+httpx

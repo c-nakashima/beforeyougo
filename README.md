@@ -145,16 +145,26 @@ NEXT_PUBLIC_API_URL=http://127.0.0.1:8000/api/backend
 
 ## API Endpoints
 
-| Method | Endpoint | Description |
-| --- | --- | --- |
-| GET | `/api/backend/tasksets` | Retrieve all tasksets |
-| POST | `/api/backend/tasksets` | Create a taskset |
-| GET | `/api/backend/tasksets/{taskset_id}` | Retrieve a taskset and its tasks |
-| POST | `/api/backend/tasksets/{taskset_id}/tasks` | Add a task to a taskset |
-| POST | `/api/backend/tasksets/{taskset_id}/runs` | Start a taskset run |
-| GET | `/api/backend/tasksets/history` | Retrieve taskset run history |
+| Method | Endpoint                                   | Description                      |
+| ------ | ------------------------------------------ | -------------------------------- |
+| GET    | `/api/backend/tasksets`                    | Retrieve all tasksets            |
+| POST   | `/api/backend/tasksets`                    | Create a taskset                 |
+| GET    | `/api/backend/tasksets/{taskset_id}`       | Retrieve a taskset and its tasks |
+| POST   | `/api/backend/tasksets/{taskset_id}/tasks` | Add a task to a taskset          |
+| POST   | `/api/backend/tasksets/{taskset_id}/runs`  | Start a taskset run              |
+| GET    | `/api/backend/tasksets/history`            | Retrieve taskset run history     |
 
 ## Quality Checks
+
+Run backend API tests from the backend directory:
+
+```bash
+pip install -r requirements-dev.txt
+python -m unittest discover -s tests -v
+```
+
+These tests mock database connections and do not require a running database.
+They verify API behavior.
 
 Run the following checks from the frontend directory before committing changes:
 
