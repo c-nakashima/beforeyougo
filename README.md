@@ -187,8 +187,11 @@ npm run test:watch
 
 ## Roadmap
 
+- Taskset run history page
+- Restore an active run after a page reload
+- Prevent multiple active runs for the same taskset
+- Cancel an active taskset run
 - UI for adding, editing, and deleting tasks
-- Persisted completion states and a taskset run screen
 - Taskset editing and deletion
 - Automated tests
 - Authentication and per-user data management
